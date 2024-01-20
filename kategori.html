@@ -1,19 +1,27 @@
 ---
 layout: default
+title: Kategoriler
 ---
+
 <div class="home">
 	<section class="site-header">
 		<h1 class="smallcap"><a class="site-title" href="{{ '/' | prepend: site.baseurl | prepend: site.url }}">{{ site.title }}</a></h1>
 		{% include nav.html %}
-		<!--{% include intro.html %}-->
+		{% include intro.html %}
 	</section>
 	<section>
+		{% for category in site.categories %}
+		{% capture category_name %}{{ category | first }}{% endcapture %}
+		<h3 class="tag-title" id="#{{ category_name | slugize }}"># {{ category_name }} ({{site.categories[category_name].size}})</h3>
 		<ul class="post-list">
-			{% for post in site.categories.Bilgisayar %}
+			{% for post in site.categories[category_name] %}
 			<li>
 				<a href="{{ post.url | prepend: site.baseurl | prepend: site.url }}">{{ post.title }}</a> <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time>
 			</li>
-			{% endfor %}
+	    {% endfor %}
 		</ul>
+		{% endfor %}
 	</section>
+	
+
 </div>
